@@ -21,3 +21,4 @@ ERROS salvar(Tarefa tarefas[], int *pos);
 ERROS carregar(Tarefa tarefas[], int *pos);
 
 void clearBuffer();
+void filtrar(Tarefa tarefas[], int *pos, char filtro[]);

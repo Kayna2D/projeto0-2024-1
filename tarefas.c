@@ -51,17 +51,38 @@ ERROS deletar(Tarefa tarefas[], int *pos) {
   return OK;
 }
 
+void filtrar(Tarefa tarefas[], int *pos, char filtro[]) {
+  for (int i = 0; i < *pos; i++) {
+    if (strncmp(filtro, tarefas[i].categoria, TAMANHO_CATEGORIA) == 0){
+      printf("Pos: %d\t", i + 1);
+      printf("Prioridade: %d\t", tarefas[i].prioridade);
+      printf("Categoria: %s\t", tarefas[i].categoria);
+      printf("Descricao: %s\n", tarefas[i].descricao);
+    }
+  }
+}
+
 ERROS listar(Tarefa tarefas[], int *pos) {
   if (*pos == 0)
     return SEM_TAREFAS;
 
-  for (int i = 0; i < *pos; i++) {
-    printf("Pos: %d\t", i + 1);
-    printf("Prioridade: %d\t", tarefas[i].prioridade);
-    printf("Categoria: %s\t", tarefas[i].categoria);
-    printf("Descricao: %s\n", tarefas[i].descricao);
-  }
+  char filtro[TAMANHO_CATEGORIA];
+  printf("Entre com a categoria desejada: ");
+  //fgets(filtro, TAMANHO_CATEGORIA, stdin);
+  scanf("%99s", filtro);
+  clearBuffer();
 
+  if (filtro[0] == '\0'){
+    for (int i = 0; i < *pos; i++) {
+      printf("Pos: %d\t", i + 1);
+      printf("Prioridade: %d\t", tarefas[i].prioridade);
+      printf("Categoria: %s\t", tarefas[i].categoria);
+      printf("Descricao: %s\n", tarefas[i].descricao);
+    }
+  } 
+  else {
+    filtrar(tarefas, pos, filtro);
+  }
   return OK;
 }
 
@@ -105,6 +126,6 @@ ERROS carregar(Tarefa tarefas[], int *pos) {
 
 void clearBuffer() {
   int c;
-  while ((c = getchar()) != '\n' && c != EOF)
+  while ((c = getchar()) != '\n' && c != EOF) 
     ;
 }
