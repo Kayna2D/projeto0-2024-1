@@ -87,25 +87,54 @@ ERROS listar(Tarefa tarefas[], int *pos) {
 }
 
 ERROS salvar(Tarefa tarefas[], int *pos) {
-  FILE *f = fopen("tarefas.bin", "wb");
-  if (f == NULL)
-    return ABRIR;
-
-  int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-  if (qtd == 0)
-    return ESCREVER;
-
-  qtd = fwrite(pos, 1, sizeof(int), f);
-  if (qtd == 0)
-    return ESCREVER;
-
-  if (fclose(f))
-    return FECHAR;
+  printf("Gostaria de salvar suas tarefas em um arquivo .txt? (s/n): ");
+  if (getchar() == 's'){
+    FILE *f = fopen("tarefas.bin", "wb");
+    if (f == NULL)
+      return ABRIR;
+  
+    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
+    if (qtd == 0)
+      return ESCREVER;
+  
+    qtd = fwrite(pos, 1, sizeof(int), f);
+    if (qtd == 0)
+      return ESCREVER;
+  
+    if (fclose(f))
+      return FECHAR;
+        }
 
   return OK;
 }
 
-ERROS carregar(Tarefa tarefas[], int *pos) {
+ERROS salvartxt(Tarefa tarefas[], int *pos) {
+  printf("Gostaria de salvar suas tarefas em um arquivo .txt? (s/n): ");
+  if (getchar() == 's'){
+    char nome[100];
+    printf("Entre com o nome do arquivo: ");
+    scanf("%99s.txt", nome);
+    FILE *f = fopen(nome, "w");
+    if (f == NULL)
+      return ABRIR;
+
+    for (int i = 0; i < *pos; i++) {
+      int qtd = fprintf(f, "Prioridade: %d | Categoria: %s | Descrição: %s\n", tarefas[i].prioridade, tarefas[i].categoria, tarefas[i].descricao);
+      if (qtd == 0)
+        return ESCREVER;
+    }
+
+    if (fclose(f))
+      return FECHAR;
+  } 
+  else 
+    return NAO_SALVAR;
+  return OK;
+}
+
+ERROS carregar(Tarefa tarefas[], int *pos) { 
+  printf("Gostaria de carregar as tarefas? (s/n): ");
+  if (getchar() == 's'){
   FILE *f = fopen("tarefas.bin", "rb");
   if (f == NULL)
     return ABRIR;
@@ -120,9 +149,11 @@ ERROS carregar(Tarefa tarefas[], int *pos) {
 
   if (fclose(f))
     return FECHAR;
+  }
 
   return OK;
 }
+
 
 void clearBuffer() {
   int c;

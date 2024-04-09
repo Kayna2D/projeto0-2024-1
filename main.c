@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main() {
-  funcao fs[] = {criar, deletar, listar, salvar, carregar};
+  funcao fs[] = {criar, deletar, listar, salvar, carregar, salvartxt};
 
   Tarefa tarefas[TOTAL];
   int pos;
@@ -56,10 +56,18 @@ int main() {
 
   } while (opcao >= 0);
 
+  fs[5](tarefas, &pos);
+  ERROS errotxt = fs[5](tarefas, &pos);
+  if (errotxt != OK) {
+    printf("Erro ao salvar arquivo txt\n");
+  }
+  else if (errotxt == NAO_SALVAR)
+    printf("Saindo sem salvar...\n");
   fs[3](tarefas, &pos);
   ERROS errosalvar = fs[3](tarefas, &pos);
   if (errosalvar != OK)
     printf("Erro ao salvar arquivo\n");
   else
     printf("Salvo com sucesso!\n");
+  
 }
