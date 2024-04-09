@@ -67,12 +67,12 @@ ERROS listar(Tarefa tarefas[], int *pos) {
     return SEM_TAREFAS;
 
   char filtro[TAMANHO_CATEGORIA];
-  printf("Entre com a categoria desejada: ");
+  printf("Entre com a categoria desejada (digite '-' para listar todas): ");
   //fgets(filtro, TAMANHO_CATEGORIA, stdin);
   scanf("%99s", filtro);
-  clearBuffer();
+  //clearBuffer();
 
-  if (filtro[0] == '\0'){
+  if (filtro[0] == '-'){
     for (int i = 0; i < *pos; i++) {
       printf("Pos: %d\t", i + 1);
       printf("Prioridade: %d\t", tarefas[i].prioridade);
