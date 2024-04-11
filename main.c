@@ -46,7 +46,7 @@ int main() {
         
       else if (opcao == 1) {
         if (erro == SEM_TAREFAS)
-          printf("Não ha tarefas para deletar.\n");
+          printf("Nao ha tarefas para deletar.\n");
         else if (erro == NAO_ENCONTRADO)
           printf("Tarefa nao encontrada.\n");
         else
